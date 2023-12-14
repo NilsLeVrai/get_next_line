@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:18 by niabraha          #+#    #+#             */
-/*   Updated: 2023/12/12 16:03:14 by niabraha         ###   ########.fr       */
+/*   Updated: 2023/12/14 11:23:29 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 # define GET_NEXT_LINE_H
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
-#endif
+#define BUFFER_SIZE 42
+# endif
 
-# include <unistd.h>
+# include <fcntl.h>
+# include <stdio.h>
 # include <stdlib.h>
+# include <unistd.h>
 
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *src);
