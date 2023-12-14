@@ -32,7 +32,7 @@ static void	*free_tab(char **tab)
 
 char	*next_line(int fd)
 {
-	
+
 }
 
 char*	write_line(int fd)
@@ -42,21 +42,26 @@ char	*parsing_file(int fd, char *line)
 {
 	char *p;
 
-	p = 
+	p =
 	while (buffer > 0)
 	{
-		
+
 	}
-	return ();
+	return (line);
 }
 
 char	*get_next_line(int fd)
 {
-	char* buffer;
-	char* line;
+	static char*	stash;
+	char*			buffer;
+	char*			line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
+	{
+		free(stash);
+		stash = NULL;
+		return (stash);
+	}
 	buffer = parsing_file(fd, line);
 	if (!buffer)
 		return (NULL);
