@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niabraha <niabraha@42.fr>                  +#+  +:+       +#+        */
+/*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2023/12/14 12:23:57 by niabraha         ###   ########.fr       */
+/*   Updated: 2023/12/15 15:25:17 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*parsing_file(int fd, char *line)
 {
 	char *p;
 
-	p =
+	p = malloc
 	while (buffer > 0)
 	{
 
