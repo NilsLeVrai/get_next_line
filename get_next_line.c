@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2023/12/18 13:32:19 by niabraha         ###   ########.fr       */
+/*   Updated: 2023/12/18 14:17:01 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ delete line:
 function deleting and joining lines
 */
 
-static void	*free_tab(char **tab)
+/* static void	*free_tab(char **tab)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ static void	*free_tab(char **tab)
 
 char	*next_line(int fd)
 {
-
+	
 }
 
 char*	write_line(int fd)
@@ -49,24 +49,26 @@ char	*parsing_file(int fd, char *line)
 
 	}
 	return (line);
-}
+} */
 
 char	*get_next_line(int fd)
 {
-	static char*	stash;
-	char*			buffer;
-	char*			line;
+	int			bytes_read;
+	char		*stash;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-	{
-		free(stash);
-		stash = NULL;
-		return (stash);
-	}
-	buffer = parsing_file(fd, line);
-	if (!buffer)
+	stash = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!stash)	
 		return (NULL);
-	line = write_line(buffer);
-	buffer = next_line(buffer);
-	return (line);
+	bytes_read = read(fd, stash, BUFFER_SIZE);
+	if (bytes_read < 0 || BUFFER_SIZE < 0)
+		return (NULL);
+	while (bytes_read >= 0)
+	{
+		stash[bytes_read] = '\0';
+		if (ft_strchr(stash, '\n'))
+			return (parsing_file(fd, stash));
+	}
+	if (bytes_read == 0)
+		return (NULL);
+	return (stash);
 }
