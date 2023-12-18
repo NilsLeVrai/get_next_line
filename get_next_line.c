@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2023/12/15 15:25:17 by niabraha         ###   ########.fr       */
+/*   Updated: 2023/12/18 13:32:19 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ char	*parsing_file(int fd, char *line)
 {
 	char *p;
 
-	p = malloc
+	if (!p = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1)));
+		return (NULL);
 	while (buffer > 0)
 	{
 
