@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <assert.h>
 
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *src);

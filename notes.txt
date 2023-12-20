@@ -7,10 +7,9 @@ Bytes_read = 27 (5+10+3+6+3)
 BUFFER_SIZE = 3
 
 
-pseudo-code:
+READ MALLOC FREE
 
-tant que read_bytes >= 0
-	tant que (! "\n")
-	i++
-		if 
-	
+
+buffer = taille fixe du buffer (BUFFER_SIZE)
+stash = on continue jusqua trouver un \n + incrementation via BUFFER_SIZE
+line = si\n dans stash, on renvoie line
