@@ -1,15 +1,23 @@
-salut
-salutation
-slt
-saluti
 
-Bytes_read = 27 (5+10+3+6+3)
-BUFFER_SIZE = 3
+clean_tab: (clean nimporte quoi)
+free(str)
+str=NULL
+return (NULL)
 
-
-READ MALLOC FREE
+clean stash:
 
 
-buffer = taille fixe du buffer (BUFFER_SIZE)
-stash = on continue jusqua trouver un \n + incrementation via BUFFER_SIZE
-line = si\n dans stash, on renvoie line
+
+get line: (print la ligne) (return str)
+creer ptr avec strchr pour trouver le \n
+get la len
+faire un substr
+
+
+gnl:
+stash -> [4096]
+line -> func get line(stash[fd])
+if (!line)
+    clean tout
+clean la stash func clean_stash(stash[fd])
+return line
