@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2023/12/21 15:37:25 by niabraha         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:38:02 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,26 @@
 
 char	*ft_clean(char *str)
 {
-	char	*p;
-
-	p = NULL;
-	if (str)
-	{
-		p = ft_strdup(str);
-		free(str);
-	}
-	return (p);
+	free(str);
+	str = NULL;
+	return (NULL);
 }
 
-char	*ft_clean_stash(char *str)
+/* char	*ft_clean_stash(char *str)
 {
-}
+} */
 
 char	*get_line(char*str)
 {
-	char	*del; // del is the address of the first \n in str
-	char*	line; // line is the line to be returned
-	int		len; // len is the length of the line to be returned
+	char	*del;
+	char	*line;
+	int		len;
 
-	del = ft_strchr(str, "\n");
+	del = ft_strchr(str, '\n');
 	len = (del - str) + 1;
 	line = ft_substr(str, 0, len);
+	if (!line)
+		return (NULL);
 	return (line);
 }
 
@@ -50,7 +46,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = get_line(stash[fd]);
 	if (!line)
-		return (&ft_clean(stash[fd]));
-	stash[fd] = ft_clean_stash(stash[fd]);
+		return (ft_clean(stash[fd]));
+	//stash[fd] = ft_clean_stash(stash[fd]);
 	return (line);
 }
