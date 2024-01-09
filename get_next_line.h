@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:18 by niabraha          #+#    #+#             */
-/*   Updated: 2023/12/21 18:30:29 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/09 16:05:57 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@
 #  define BUFFER_SIZE 3
 # endif
 
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <assert.h>
+//# include <fcntl.h> //open
+# include <stdio.h> //printf
+# include <stdlib.h> //malloc, free
+# include <unistd.h> //read
 
 char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(const char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
 char	*get_next_line(int fd);

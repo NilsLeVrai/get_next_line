@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/09 15:44:33 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/09 16:21:14 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,13 @@ char	*ft_clean(char *str)
 	return (NULL);
 }
 
-/* char	*ft_return_line(char *line)
-{
-	
-}
-*/
-
-char	*ft_save_line(char *stash)
+char	*ft_return_line(char *stash)
 {
 	char	*line;
-	int		size_line;
+	int		i;
 
-	size_line = 0;
-	while (stash[size_line] != '\n' && stash[size_line] != '\0')
-		size_line++;
-	if (!stash[size_line])
-		return (ft_clean(stash));
-	line = (char *) malloc(sizeof(char) * (size_line + 2)); //+2 pour \n et \0
+	i = 0;
+	line = malloc(sizeof(char) * (BUFFER_SIZE + 2));
 	if (!line)
 		return (NULL);
 	while (stash[i] != '\n' && stash[i] != '\0')
@@ -44,10 +34,34 @@ char	*ft_save_line(char *stash)
 		line[i] = stash[i];
 		i++;
 	}
+	return (line);
+}
+
+
+char	*ft_save_line(char *stash)
+{
+	char	*line;
+	int		next_line;
+	int		current_line;
+
+	next_line = 0;
+	current_line = 0;
+	while (stash[next_line] != '\n' && stash[next_line] != '\0')
+		next_line++;
+	if (!stash[next_line])
+		return (ft_clean(stash));
+	line = (char *) malloc(sizeof(char) * ((ft_strlen(stash) - next_line) + 1));
+	if (!line)
+		return (NULL);
+	next_line++;
+	while (stash[next_line] != '\n' && stash[next_line] != '\0')
 	{
-		line[i] = stash[i];
-		i++;
+		line[current_line] = stash[next_line];
+		current_line++;
 	}
+	line[current_line] = '\0';
+	ft_clean(stash);
+	return (line);
 }
 
 char	*ft_save_all(int fd, char *stash)
@@ -83,7 +97,7 @@ char	*get_next_line(int fd)
 		return (ft_clean(stash));
 	//line = "oui";
 	line = ft_save_line(stash);
-	//stash = ft_return_line(stash);
+	stash = ft_return_line(stash);
 	return (line);
 }
 
