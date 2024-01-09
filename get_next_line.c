@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/09 18:21:09 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/09 18:40:52 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ char	*ft_return_line(char *stash)
 {
 	char	*line;
 	int		len;
-	int		i;
 
 	len = 0;
-	i = 0;
 	if (!stash[len])
 		return (ft_clean(stash));
 	while (stash[len] != '\n' && stash[len] != '\0')
@@ -34,20 +32,20 @@ char	*ft_return_line(char *stash)
 	line = malloc(sizeof(char) * (len + 2));
 	if (!line)
 		return (NULL);
-	while (stash[i] != '\n' && stash[i] != '\0')
+	len = 0;
+	while (stash[len] != '\n' && stash[len] != '\0')
 	{
-		line[i] = stash[i];
-		i++;
+		line[len] = stash[len];
+		len++;
 	}
-	if (stash[i] == '\n')
+	if (stash[len] == '\n')
 	{
-		line[i] = '\n';
-		i++;
+		line[len] = stash[len];
+		len++;
 	}
-	line[i] = '\0';
+	line[len] = '\0';
 	return (line);
 }
-
 
 char	*ft_save_line(char *stash)
 {
@@ -60,10 +58,7 @@ char	*ft_save_line(char *stash)
 	while (stash[next_line] != '\n' && stash[next_line] != '\0')
 		next_line++;
 	if (!stash[next_line])
-	{
-		free(stash);
-		return (NULL);
-	}
+		return (ft_clean(stash));
 	line = (char *) malloc(sizeof(char) * ((ft_strlen(stash) - next_line) + 1));
 	if (!line)
 		return (NULL);
