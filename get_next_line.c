@@ -6,12 +6,11 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/09 16:21:14 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/09 18:21:09 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-//read, malloc, free
 
 char	*ft_clean(char *str)
 {
@@ -23,10 +22,16 @@ char	*ft_clean(char *str)
 char	*ft_return_line(char *stash)
 {
 	char	*line;
+	int		len;
 	int		i;
 
+	len = 0;
 	i = 0;
-	line = malloc(sizeof(char) * (BUFFER_SIZE + 2));
+	if (!stash[len])
+		return (ft_clean(stash));
+	while (stash[len] != '\n' && stash[len] != '\0')
+		len++;
+	line = malloc(sizeof(char) * (len + 2));
 	if (!line)
 		return (NULL);
 	while (stash[i] != '\n' && stash[i] != '\0')
@@ -34,6 +39,12 @@ char	*ft_return_line(char *stash)
 		line[i] = stash[i];
 		i++;
 	}
+	if (stash[i] == '\n')
+	{
+		line[i] = '\n';
+		i++;
+	}
+	line[i] = '\0';
 	return (line);
 }
 
@@ -49,7 +60,10 @@ char	*ft_save_line(char *stash)
 	while (stash[next_line] != '\n' && stash[next_line] != '\0')
 		next_line++;
 	if (!stash[next_line])
-		return (ft_clean(stash));
+	{
+		free(stash);
+		return (NULL);
+	}
 	line = (char *) malloc(sizeof(char) * ((ft_strlen(stash) - next_line) + 1));
 	if (!line)
 		return (NULL);
@@ -60,7 +74,7 @@ char	*ft_save_line(char *stash)
 		current_line++;
 	}
 	line[current_line] = '\0';
-	ft_clean(stash);
+	free(stash);
 	return (line);
 }
 
@@ -77,7 +91,10 @@ char	*ft_save_all(int fd, char *stash)
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes == -1)
-			return (ft_clean(buffer));
+		{
+			free(buffer);
+			return (NULL);
+		}
 		buffer[read_bytes] = '\0';
 		stash = ft_strjoin(stash, buffer);
 	}
@@ -94,8 +111,10 @@ char	*get_next_line(int fd)
 		return (NULL);
 	stash = ft_save_all(fd, stash);
 	if (!stash)
-		return (ft_clean(stash));
-	//line = "oui";
+	{
+		free(stash);
+		return (NULL);
+	}
 	line = ft_save_line(stash);
 	stash = ft_return_line(stash);
 	return (line);
