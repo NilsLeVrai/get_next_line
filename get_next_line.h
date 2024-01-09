@@ -6,15 +6,15 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:18 by niabraha          #+#    #+#             */
-/*   Updated: 2023/12/18 15:45:15 by niabraha         ###   ########.fr       */
+/*   Updated: 2023/12/21 18:30:29 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 3
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 3
 # endif
 
 # include <fcntl.h>
