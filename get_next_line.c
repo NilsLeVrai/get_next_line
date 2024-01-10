@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/10 16:17:08 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/10 16:35:07 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,39 +83,39 @@ char	*ft_save_all(int fd, char *stash)
 	while (read_bytes != 0)
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (buffer && !stash)
+		if (buffer && !stash[fd])
 		{
-			stash = ft_substr(buffer, 0, read_bytes);
-			if (!stash)
+			stash[fd] = ft_substr(buffer, 0, read_bytes);
+			if (!stash[fd])
 				return (free(buffer), NULL);
 		}
 		if (read_bytes == -1)
 		{
 			free(buffer);
-			if (stash)
-				return (free(stash), NULL);
+			if (stash[fd])
+				return (free(stash[fd]), NULL);
 		}
 		buffer[read_bytes] = '\0';
-		stash = ft_strjoin(stash, buffer);
+		stash[fd] = ft_strjoin(stash[fd], buffer);
 	}
 	free(buffer);
-	return (stash);
+	return (stash[fd]);
 }
 
 
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*stash;
+	static char	*stash[4096];
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (0);
-	stash = ft_save_all(fd, stash);
+	stash[fd] = ft_save_all(fd, stash);
 	if (!stash)
 		return (NULL);
-	line = ft_return_line(stash); // basile boli
+	line = ft_return_line(stash[fd]); // basile boli
 	printf("ca c basile :%s\n", line);
-	stash = ft_remaining(stash); // tete de zidane barthez le gardien
+	stash[fd] = ft_remaining(stash[fd]); // tete de zidane barthez le gardien
 	printf("ca c zidane et barthez%s\n", line);
 	return (line);
 }
