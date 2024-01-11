@@ -22,25 +22,42 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char    *ft_substr(const char *s, unsigned int start, size_t len)
+char	*ft_strdup(const char *src)
 {
-        size_t  i;
-        size_t  len_s;
-        char    *p;
+	char	*p;
+	int		compteur;
 
-        i = 0;
-        if (!s)
-                return (NULL);
-        len_s = ft_strlen(s);
-        if (len > len_s - start)
-                len = len_s - start;
-        p = (char *)malloc(sizeof(char) * (len + 1));
-        if (!p)
-                return (NULL);
-        while (s[start] && i < len)
-                p[i++] = s[start++];
-        p[i] = '\0';
-        return (p);
+	compteur = 0;
+	p = (char *) malloc(sizeof(char) * (ft_strlen(src) + 1));
+	if (!p)
+		return (NULL);
+	while (*src)
+		p[compteur++] = *src++;
+	p[compteur] = '\0';
+	return (p);
+}
+
+char	*ft_substr(const char *s, unsigned int start, size_t len)
+{
+	size_t	i;
+	size_t	len_s;
+	char	*p;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	len_s = ft_strlen(s);
+	if (start >= len_s)
+		return (ft_strdup(""));
+	if (len > len_s - start)
+		len = len_s - start;
+	p = (char *)malloc(sizeof(char) * (len + 1));
+	if (!p)
+		return (NULL);
+	while (s[start] && i < len)
+		p[i++] = s[start++];
+	p[i] = '\0';
+	return (p);
 }
 
 
@@ -84,18 +101,5 @@ char	*ft_strchr(const char *s, int c)
 	}
 	return (NULL);
 }
-/* char    *ft_strchr(const char *s, int c)
-{
-    if ((unsigned char)c == '\0' && *s == '\0')
-        return ((char *)s);
-    while (*s)
-    {
-        if (*s == (unsigned char)c)
-            return ((char *)s);
-        if (*(s + 1) == (unsigned char)c)
-            return ((char *)s + 1);
-        s++;
-    }
-    return (NULL);
-} */
+
 

@@ -15,31 +15,23 @@
 #include <assert.h>
 #include <stdio.h>
 
-char	*ft_return_line(int fd, char *stash)
+char	*ft_return_line(int fd, char **stash)
 {
-	char	*lines;
-	int		next_line;
-	int		current_line;
+	int		len;
+	char	*current_line;
+	char	*remaining;
 
-	next_line = 0;
-	current_line = 0;
-	while (stash && stash[current_line] != '\n')
-		current_line++;
+	len = 0;
 	if (!stash)
 		return (NULL);
-	lines = malloc(sizeof(char) * (ft_strlen(stash) - current_line + 1));
-	if (!lines)
-		return (NULL);
-	current_line++;
-	while (stash[current_line])
-	{
-		lines[next_line] = stash[current_line];
-		current_line++;
-		next_line++;
-	}
-	lines[next_line] = '\0';
-	free(stash);
-	return (lines);
+	while (*stash && stash[fd][len] != '\n')
+		len++;
+	len++;
+	current_line = ft_substr(stash[fd], 0, len);
+	remaining = ft_substr(stash[fd], len, ft_strlen(&stash[fd][len]));
+	free(stash[fd]);
+	stash[fd] = remaining;
+	return (current_line);
 }
 char	*ft_parsing(int fd, char **stash, char *tmp)
 {
