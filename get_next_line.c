@@ -24,7 +24,7 @@ char	*ft_return_line(int fd, char **stash)
 	len = 0;
 	if (!stash)
 		return (NULL);
-	while (*stash && stash[fd][len] != '\n')
+	while (stash[fd][len] && stash[fd][len] != '\n')
 		len++;
 	len++;
 	current_line = ft_substr(stash[fd], 0, len);
