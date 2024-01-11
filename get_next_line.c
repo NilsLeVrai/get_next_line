@@ -15,37 +15,7 @@
 #include <assert.h>
 #include <stdio.h>
 
-char	*ft_remaining(char *stash)
-{
-	char	*line;
-	int		len;
-	int		i;
-
-	len = 0;
-	i = 0;
-	if (!stash)
-		return (NULL);
-	while (stash[len] && stash[len] != '\n')
-		len++;
-	line = malloc(sizeof(char) * (len + 2));
-	if (!line)
-		return (NULL);
-	while (stash && stash[len] != '\n')
-	{
-		line[i] = stash[i];
-		i++;
-	}
-	if (stash[i] != '\n')
-	{
-		line[i] = stash[i];
-		i++;
-	}
-	line[i] = '\0';
-	return (line);
-}
-
-
-char	*ft_return_line(char *stash)
+char	*ft_return_line(int fd, char *stash)
 {
 	char	*lines;
 	int		next_line;
@@ -71,18 +41,15 @@ char	*ft_return_line(char *stash)
 	free(stash);
 	return (lines);
 }
-char	*ft_save_all(int fd, char **stash)
+char	*ft_parsing(int fd, char **stash, char *tmp)
 {
 	int		read_bytes;
 	char	*buffer;
 
 	read_bytes = 1;
-	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buffer)
-		return (NULL);
 	while (read_bytes != 0)
 	{
-		read_bytes = read(fd, buffer, BUFFER_SIZE);
+		read_bytes = read(fd, tmp, BUFFER_SIZE);
 		if (read_bytes == -1)
 		{
 			free(stash[fd]);
@@ -90,7 +57,7 @@ char	*ft_save_all(int fd, char **stash)
 		}
 		else
 		{
-			buffer = ft_strjoin(stash[fd], buffer);
+			buffer = ft_strjoin(stash[fd], tmp);
 			free(stash[fd]);
 			stash[fd] = buffer;
 		}
@@ -105,14 +72,17 @@ char	*get_next_line(int fd)
 {
 	char		*line;
 	static char	*stash[4096];
+	char		*tmp;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (0);
-	stash[fd] = ft_save_all(fd, stash);
+	tmp = (char *) malloc((sizeof(char) * (BUFFER_SIZE + 1)));
+	if (!tmp)
+		return (NULL);
+	stash[fd] = ft_parsing(fd, stash, tmp);
 	if (!stash)
 		return (NULL);
-	line = ft_return_line(stash[fd]); // basile boli
-	stash[fd] = ft_remaining(stash[fd]); // tete de zidane barthez le gardien
+	line = ft_return_line(fd, stash); // basile boli
 	return (line);
 }
 
