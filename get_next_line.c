@@ -71,35 +71,33 @@ char	*ft_return_line(char *stash)
 	free(stash);
 	return (lines);
 }
-char	*ft_save_all(int fd, char *stash)
+char	*ft_save_all(int fd, char **stash)
 {
 	int		read_bytes;
 	char	*buffer;
 
-	buffer = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	read_bytes = 1;
+	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (NULL);
-	read_bytes = 1;
 	while (read_bytes != 0)
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (buffer && !stash[fd])
-		{
-			stash[fd] = ft_substr(buffer, 0, read_bytes);
-			if (!stash[fd])
-				return (free(buffer), NULL);
-		}
 		if (read_bytes == -1)
 		{
-			free(buffer);
-			if (stash[fd])
-				return (free(stash[fd]), NULL);
+			free(stash[fd]);
+			return (NULL);
 		}
-		buffer[read_bytes] = '\0';
-		stash[fd] = ft_strjoin(stash[fd], buffer);
+		else
+		{
+			buffer = ft_strjoin(stash[fd], buffer);
+			free(stash[fd]);
+			stash[fd] = buffer;
+		}
+		if (stash[fd] && (ft_strchr(stash[fd], '\n')) || read_bytes == 0)
+			return (stash[fd]);
 	}
-	free(buffer);
-	return (stash[fd]);
+	return (NULL);
 }
 
 
@@ -114,26 +112,11 @@ char	*get_next_line(int fd)
 	if (!stash)
 		return (NULL);
 	line = ft_return_line(stash[fd]); // basile boli
-	printf("ca c basile :%s\n", line);
 	stash[fd] = ft_remaining(stash[fd]); // tete de zidane barthez le gardien
-	printf("ca c zidane et barthez%s\n", line);
 	return (line);
 }
 
-int main()
-{
-	int fd = open("textou.txt", O_RDONLY);
-	char *line = get_next_line(fd);
-	printf("coucou main: %s\n", line);
-	while (line != NULL)
-	{
-		printf("bite<%s>", line);
-		free(line);
-		line = get_next_line(fd);
-	}
-	printf("main chatte: <%s>", line);
-	close(fd);
-}
+
 //1. Sauvegarder les lignes lues
 //2. Sauvegarder chaque ligne
 //3. Retourner chaque ligne
