@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:10 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/15 14:47:14 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:44:58 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,9 @@ size_t	ft_strlen(char *s)
 	size_t	i;
 
 	i = 0;
-	while (s && s[i])
+	while (s[i] != '\0')
 		i++;
 	return (i);
-}
-
-char    *ft_strdup(char *src)
-{
-        char    *p;
-        int             compteur;
-
-        compteur = 0;
-        p = (char *) malloc(sizeof(char) * (ft_strlen(src) + 1));
-        if (!p)
-                return (NULL);
-        while (*src)
-                p[compteur++] = *src++;
-        p[compteur] = '\0';
-        return (p);
 }
 
 char	*ft_strjoin(char *s1, char *s2)

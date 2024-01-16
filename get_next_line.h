@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:18 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/12 14:43:00 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:44:41 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
 # include <stdlib.h> //malloc, free
 # include <unistd.h> //read
 # include <stdio.h> //printf
-#include <fcntl.h>
+# include <fcntl.h>
 
 char	*get_next_line(int fd);
 char	*ft_strchr(char *s, int c);
 char	*ft_strjoin(char *s1, char *s2);
-char    *ft_substr(char *s, unsigned int start, size_t len);
+char	*ft_substr(char *s1, unsigned int start, size_t len);
 size_t	ft_strlen(char *s);
 
 #endif
