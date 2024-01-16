@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:10 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/15 13:16:37 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/15 14:47:14 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ size_t	ft_strlen(char *s)
 	return (i);
 }
 
-<<<<<<< HEAD
 char    *ft_strdup(char *src)
 {
         char    *p;
@@ -36,44 +35,6 @@ char    *ft_strdup(char *src)
                 p[compteur++] = *src++;
         p[compteur] = '\0';
         return (p);
-=======
-char	*ft_strdup(const char *src)
-{
-	char	*p;
-	int		compteur;
-
-	compteur = 0;
-	p = (char *) malloc(sizeof(char) * (ft_strlen(src) + 1));
-	if (!p)
-		return (NULL);
-	while (*src)
-		p[compteur++] = *src++;
-	p[compteur] = '\0';
-	return (p);
-}
-
-char	*ft_substr(const char *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	size_t	len_s;
-	char	*p;
-
-	i = 0;
-	if (!s)
-		return (NULL);
-	len_s = ft_strlen(s);
-	if (start >= len_s)
-		return (ft_strdup(""));
-	if (len > len_s - start)
-		len = len_s - start;
-	p = (char *)malloc(sizeof(char) * (len + 1));
-	if (!p)
-		return (NULL);
-	while (s[start] && i < len)
-		p[i++] = s[start++];
-	p[i] = '\0';
-	return (p);
->>>>>>> refs/remotes/origin/main
 }
 
 char	*ft_strjoin(char *s1, char *s2)
@@ -116,8 +77,3 @@ char	*ft_strchr(char *s, int c)
 	}
 	return (0);
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/main
-

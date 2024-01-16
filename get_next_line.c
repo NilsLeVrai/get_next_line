@@ -6,15 +6,13 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/15 14:35:18 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:24:00 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 
-char	*ft_remaining(char *stash)
+char	*ft_return_line(char *stash)
 {
 	char	*line;
 	int		len;
@@ -22,14 +20,14 @@ char	*ft_remaining(char *stash)
 
 	len = 0;
 	i = 0;
-	if (!stash)
+	if (!stash[len])
 		return (NULL);
 	while (stash[len] && stash[len] != '\n')
 		len++;
 	line = malloc(sizeof(char) * (len + 2));
 	if (!line)
 		return (NULL);
-	while (stash && stash[len] != '\n')
+	while (stash[i] && stash[len] != '\n')
 	{
 		line[i] = stash[i];
 		i++;
@@ -43,95 +41,85 @@ char	*ft_remaining(char *stash)
 	return (line);
 }
 
-
-char	*ft_return_line(char *stash)
+char	*ft_remove_line(char *stash)
 {
-	char	*lines;
-	int		next_line;
-	int		current_line;
+	char 	*remaining_line;
+	int		len;
+	int		i;
 
-	next_line = 0;
-	current_line = 0;
-	while (stash && stash[current_line] != '\n')
-		current_line++;
-	if (!stash)
-		return (NULL);
-	lines = malloc(sizeof(char) * (ft_strlen(stash) - current_line + 1));
-	if (!lines)
-		return (NULL);
-	current_line++;
-	while (stash[current_line])
+	len = 0;
+	while (stash[len] && stash[len] != '\n')
+		len++;
+	if (!stash[len])
 	{
-		lines[next_line] = stash[current_line];
-		current_line++;
-		next_line++;
+		free(stash);
+		return (NULL);
 	}
-	lines[next_line] = '\0';
+	remaining_line = (char *) malloc (sizeof(char) * (ft_strlen(stash) - len + 1));
+	if (!remaining_line)
+		return (NULL);
+	len++;
+	i = 0;
+	while (stash[len])
+		remaining_line[i++] = stash[len++];
+	remaining_line[i] = '\0';
 	free(stash);
-	return (lines);
+	return (remaining_line);	
 }
-char	*ft_save_all(int fd, char *stash)
-{
-	char 	*buffer;
 
-	buffer = (char *) malloc(sizeof(char) * (BUFFER_SIZE + 1));
+char	*ft_read_line(int fd, char *stash)
+{
+	ssize_t	bytes_read;
+	char	*buffer;
+
+	bytes_read = 1;
+	buffer = (char *) malloc (sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	read_bytes = 1;
-	while (read_bytes != 0)
+	while (!ft_strchr(stash, '\n') && bytes_read > 0)
 	{
-		read_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (buffer && !stash[fd])
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == -1)
 		{
-			stash[fd] = ft_substr(buffer, 0, read_bytes);
-			if (!stash[fd])
-				return (free(buffer), NULL);
+			free (buffer);
+			return (NULL);
 		}
-		if (read_bytes == -1)
-		{
-			free(buffer);
-			if (stash[fd])
-				return (free(stash[fd]), NULL);
-		}
-		buffer[read_bytes] = '\0';
-		stash[fd] = ft_strjoin(stash[fd], buffer);
+		buffer[bytes_read] = '\0';
+		stash = ft_strjoin(stash, buffer);
 	}
 	free(buffer);
-	return (stash[fd]);
+	return (stash);
 }
-
 
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*stash[4096];
+	static char	*stash;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (0);
-	stash[fd] = ft_save_all(fd, stash);
+	stash = ft_read_line(fd, stash);
 	if (!stash)
 		return (NULL);
-	line = ft_return_line(stash[fd]); // basile boli
-	printf("ca c basile :%s\n", line);
-	stash[fd] = ft_remaining(stash[fd]); // tete de zidane barthez le gardien
-	printf("ca c zidane et barthez%s\n", line);
+	line = ft_return_line(stash);
+	stash = ft_remove_line(stash);
 	return (line);
 }
 
-int main()
+/* int main()
 {
 	int fd = open("textou.txt", O_RDONLY);
 	char *line = get_next_line(fd);
 	printf("coucou main: %s\n", line);
 	while (line != NULL)
 	{
-		printf("bite<%s>", line);
+		printf("works<%s>", line);
 		free(line);
 		line = get_next_line(fd);
 	}
-	printf("main chatte: <%s>", line);
+	//printf("main plus loin: <%s>", line);
 	close(fd);
-}
+} */
 //1. Sauvegarder les lignes lues
 //2. Sauvegarder chaque ligne
 //3. Retourner chaque ligne
