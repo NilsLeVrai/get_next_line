@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/17 15:21:29 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/17 16:11:09 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*ft_read_line(int fd, char *stash) // cherche '\n'
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*stash;
+	char	*stash;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (0);
@@ -111,7 +111,7 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-/* int main()
+int main()
 {
 	int fd = open("textou.txt", O_RDONLY);
 	char *line = get_next_line(fd);
@@ -123,7 +123,7 @@ char	*get_next_line(int fd)
 	}
 	//printf("main plus loin: <%s>", line);
 	close(fd);
-} */
+}
 //1. Sauvegarder les lignes lues
 //2. Sauvegarder chaque ligne
 //3. Retourner chaque ligne
