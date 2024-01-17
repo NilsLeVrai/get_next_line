@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:18 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/17 13:08:00 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/17 15:34:45 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4
+#  define BUFFER_SIZE 8192
 # endif
 
 # include <stdlib.h> //malloc, free
 # include <unistd.h> //read
 # include <stdio.h> //printf
-# include <fcntl.h>
+# include <fcntl.h> // open dans le main
 
 char	*get_next_line(int fd);
 char	*ft_strchr(char *s, int c);

@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:10 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/17 13:08:09 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/17 15:02:11 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (*s2)
 		p[i++] = *s2++;
 	p[i] = '\0';
+	free(s1);
 	return (p);
 }
 

@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/17 14:27:59 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/17 15:21:29 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_remove_line(char *stash)
 		free(stash);
 		return (NULL);
 	}
-	line = malloc((ft_strlen(stash) - len + 1));
+	line = (char *)malloc(sizeof(char) * ((ft_strlen(stash) - len) + 1));
 	if (!line)
 		return (NULL);
 	len++;
@@ -50,7 +50,7 @@ char	*ft_return_line(char *stash)
 		return (NULL);
 	while (stash[len] && stash[len] != '\n')
 		len++;
-	line = malloc((len + 2));
+	line = (char *)malloc(sizeof(char) * (len + 2));
 	if (!line)
 		return (NULL);
 	while (stash[i] && stash[len] != '\n')
@@ -58,7 +58,7 @@ char	*ft_return_line(char *stash)
 		line[i] = stash[i];
 		i++;
 	}
-	if (stash[i] != '\n')
+	if (stash[i] == '\n')
 	{
 		line[i] = stash[i];
 		i++;
@@ -101,10 +101,13 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (0);
 	stash = ft_read_line(fd, stash);
+	//printf("zidane\n");
 	if (!stash)
 		return (NULL);
 	line = ft_return_line(stash);
+	//printf("zidane 10\n");
 	stash = ft_remove_line(stash);
+	//printf("zizou\n");
 	return (line);
 }
 
