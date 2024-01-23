@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:18 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/17 15:34:45 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/23 14:02:46 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 8192
+# endif
+
+# if (BUFFER_SIZE < 1 || BUFFER_SIZE > INT_MAX)
+#  undef BUFFER_SIZE
 #  define BUFFER_SIZE 8192
 # endif
 

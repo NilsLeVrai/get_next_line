@@ -6,13 +6,13 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/17 16:11:09 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/23 13:58:35 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_remove_line(char *stash)
+static char	*ft_remove_line(char *stash)
 {
 	char	*line;
 	int		len;
@@ -38,7 +38,7 @@ char	*ft_remove_line(char *stash)
 	return (line);
 }
 
-char	*ft_return_line(char *stash)
+static char	*ft_return_line(char *stash)
 {
 	char	*line;
 	int		len;
@@ -67,7 +67,7 @@ char	*ft_return_line(char *stash)
 	return (line);
 }
 
-char	*ft_read_line(int fd, char *stash) // cherche '\n'
+static char	*ft_read_line(int fd, char *stash) // cherche '\n'
 {
 	ssize_t	bytes_read;
 	char	*buffer;
@@ -76,7 +76,7 @@ char	*ft_read_line(int fd, char *stash) // cherche '\n'
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
-	while (!ft_strchr(stash, '\n') && bytes_read)
+	while (!ft_strchr(stash, '\n') && bytes_read != 0)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
@@ -96,7 +96,7 @@ char	*ft_read_line(int fd, char *stash) // cherche '\n'
 char	*get_next_line(int fd)
 {
 	char		*line;
-	char	*stash;
+	static char	*stash;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (0);
@@ -113,17 +113,15 @@ char	*get_next_line(int fd)
 
 int main()
 {
-	int fd = open("textou.txt", O_RDONLY);
+	int fd = open("te.txt", O_RDONLY);
 	char *line = get_next_line(fd);
 	while (line != NULL)
 	{
-		printf("works<%s>\n", line);
+		printf("!works<%s>\n", line);
 		free(line);
 		line = get_next_line(fd);
 	}
-	//printf("main plus loin: <%s>", line);
+	if (!line)
+		printf("NULL\n");
 	close(fd);
 }
-//1. Sauvegarder les lignes lues
-//2. Sauvegarder chaque ligne
-//3. Retourner chaque ligne
