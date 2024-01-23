@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/23 13:58:35 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/23 15:07:28 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*ft_return_line(char *stash)
 		return (NULL);
 	while (stash[len] && stash[len] != '\n')
 		len++;
-	line = (char *)malloc(sizeof(char) * (len + 2));
+	line = (char *)malloc(sizeof(char) * (len + 1));
 	if (!line)
 		return (NULL);
 	while (stash[i] && stash[len] != '\n')
@@ -73,6 +73,7 @@ static char	*ft_read_line(int fd, char *stash) // cherche '\n'
 	char	*buffer;
 
 	bytes_read = 1;
+	int i = 1;
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buffer)
 		return (NULL);
@@ -85,11 +86,13 @@ static char	*ft_read_line(int fd, char *stash) // cherche '\n'
 			return (NULL);
 		}
 		buffer[bytes_read] = '\0';
-		//printf("buffer: %s\n", buffer);
-		//printf("stash: %s\n", stash);
+		//printf("buffer: [%d] %s\n", i, buffer);
+		//printf("stash: [%d] %s\n", i, stash);
 		stash = ft_strjoin(stash, buffer);
+		i++;
 	}
 	free(buffer);
+	//printf("buffy buffer: %s\nstash stasher: %s\n", buffer, stash);
 	return (stash);
 }
 
@@ -100,6 +103,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (0);
+	stash = "";
 	stash = ft_read_line(fd, stash);
 	//printf("zidane\n");
 	if (!stash)
@@ -121,7 +125,5 @@ int main()
 		free(line);
 		line = get_next_line(fd);
 	}
-	if (!line)
-		printf("NULL\n");
 	close(fd);
 }
