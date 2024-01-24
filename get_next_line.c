@@ -12,18 +12,18 @@
 
 #include "get_next_line.h"
 
-static int	len_line(char *line)
+static int	check_len_and_end(char *line)
 {
 	int	i;
 
 	i = 0;
-	while (line[i])
+	while (line[i] != '\0')
 	{
 		if (line[i] == '\n')
 			return (i);
 		i++;
 	}
-	return (-1);
+	return (FALSE);
 }
 
 static char	*ft_read_line(int fd, char *line)
@@ -34,7 +34,7 @@ static char	*ft_read_line(int fd, char *line)
 	bytes_read = 1;
 	if (!line)
 		return (NULL);
-	while (len_line(line) == -1 && bytes_read)
+	while (check_len_and_end(line) != TRUE && bytes_read)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
@@ -54,8 +54,8 @@ char	*ft_return_line(char **line)
 	char	*next_line;
 	int		len;
 
-	len = len_line(*line);
-	if (len == -1)
+	len = check_len_and_end(*line);
+	if (len == FALSE)
 	{
 		current_line = *line;
 		*line = NULL;
@@ -72,17 +72,28 @@ char	*get_next_line(int fd)
 {
 	static char	*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0 || !line)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
 		return (NULL);
+	if (!line)
+	{
+		line = (char *) malloc(sizeof(char) * 1);
+		line[0] = '\0';
+	}
 	line = ft_read_line(fd, line);
 	if (!line)
 		return (NULL);
+	if (ft_strlen(line) == 0)
+	{
+		free(line);
+		line = NULL;
+		return (NULL);
+	}
 	return (ft_return_line(&line));
 }
 
 int main()
 {
-	int fd = open("textou.txt", O_RDONLY);
+	int fd = open("te.txt", O_RDONLY);
 	char *line = get_next_line(fd);
 	while (line != NULL)
 	{
