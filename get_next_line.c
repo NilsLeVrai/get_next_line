@@ -3,125 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: niabraha <niabraha@students.42.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/07 16:54:15 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/23 15:07:28 by niabraha         ###   ########.fr       */
+/*   Created: 2024/01/24 21:28:19 by niabraha          #+#    #+#             */
+/*   Updated: 2024/01/24 21:28:19 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*ft_remove_line(char *stash)
+static int	len_line(char *line)
 {
-	char	*line;
-	int		len;
-	int		i;
+	int	i;
 
-	len = 0;
-	while (stash[len] && stash[len] != '\n')
-		len++;
-	if (!stash[len])
-	{
-		free(stash);
-		return (NULL);
-	}
-	line = (char *)malloc(sizeof(char) * ((ft_strlen(stash) - len) + 1));
-	if (!line)
-		return (NULL);
-	len++;
-	i = 0;
-	while (stash[len])
-		line[i++] = stash[len++];
-	line[i] = '\0';
-	free(stash);
-	return (line);
+	i = -1;
+	while (line[++i])
+		if (line[i] == '\n')
+			return (i);
+	return (-1);
 }
 
-static char	*ft_return_line(char *stash)
+static char	*ft_read_line(int fd, char *line)
 {
-	char	*line;
-	int		len;
-	int		i;
-
-	len = 0;
-	i = 0;
-	if (!stash[len])
-		return (NULL);
-	while (stash[len] && stash[len] != '\n')
-		len++;
-	line = (char *)malloc(sizeof(char) * (len + 1));
-	if (!line)
-		return (NULL);
-	while (stash[i] && stash[len] != '\n')
-	{
-		line[i] = stash[i];
-		i++;
-	}
-	if (stash[i] == '\n')
-	{
-		line[i] = stash[i];
-		i++;
-	}
-	line[i] = '\0';
-	return (line);
-}
-
-static char	*ft_read_line(int fd, char *stash) // cherche '\n'
-{
-	ssize_t	bytes_read;
-	char	*buffer;
+	char		buffer[BUFFER_SIZE + 1];
+	ssize_t		bytes_read;
 
 	bytes_read = 1;
-	int i = 1;
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buffer)
+	if (!line)
 		return (NULL);
-	while (!ft_strchr(stash, '\n') && bytes_read != 0)
+	while (len_line(line) == -1 && bytes_read)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read == -1)
+		if (bytes_read < 0)
 		{
-			free (buffer);
+			free (line);
 			return (NULL);
 		}
 		buffer[bytes_read] = '\0';
-		//printf("buffer: [%d] %s\n", i, buffer);
-		//printf("stash: [%d] %s\n", i, stash);
-		stash = ft_strjoin(stash, buffer);
-		i++;
+		line = ft_strjoin(line, buffer);
 	}
-	free(buffer);
-	//printf("buffy buffer: %s\nstash stasher: %s\n", buffer, stash);
-	return (stash);
+	return (line);
+}
+
+char	*ft_return_line(char **line)
+{
+	char	*current_line;
+	char	*next_line;
+	int		len;
+
+	len = len_line(*line);
+	if (len == -1)
+	{
+		current_line = *line;
+		*line = NULL;
+		return (current_line);
+	}
+	current_line = ft_substr(*line, 0, len + 1);
+	next_line = ft_substr(*line, len + 1, ft_strlen(*line) - len - 1);
+	free(*line);
+	*line = next_line;
+	return (current_line);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*line;
-	static char	*stash;
+	static char	*line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0)
-		return (0);
-	stash = "";
-	stash = ft_read_line(fd, stash);
-	//printf("zidane\n");
-	if (!stash)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, NULL, 0) < 0 || !line)
 		return (NULL);
-	line = ft_return_line(stash);
-	//printf("zidane 10\n");
-	stash = ft_remove_line(stash);
-	//printf("zizou\n");
-	return (line);
+	line = ft_read_line(fd, line);
+	if (!line)
+		return (NULL);
+	return (ft_return_line(&line));
 }
 
 int main()
 {
-	int fd = open("te.txt", O_RDONLY);
+	int fd = open("textou.txt", O_RDONLY);
 	char *line = get_next_line(fd);
 	while (line != NULL)
 	{
-		printf("!works<%s>\n", line);
+		printf("%s", line);
 		free(line);
 		line = get_next_line(fd);
 	}
