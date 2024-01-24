@@ -16,10 +16,13 @@ static int	len_line(char *line)
 {
 	int	i;
 
-	i = -1;
-	while (line[++i])
+	i = 0;
+	while (line[i])
+	{
 		if (line[i] == '\n')
 			return (i);
+		i++;
+	}
 	return (-1);
 }
 
