@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 21:28:19 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/25 15:14:41 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:20:50 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*get_next_line(int fd)
 	return (ft_return_line(&line));
 }
 
-int main()
+/* int main()
 {
 	int fd = open("te.txt", O_RDONLY);
 	char *line = get_next_line(fd);
@@ -102,4 +102,4 @@ int main()
 		line = get_next_line(fd);
 	}
 	close(fd);
-}
+} */
