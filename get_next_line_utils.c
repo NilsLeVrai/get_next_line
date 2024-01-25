@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:10 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/23 14:19:21 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:11:06 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@ size_t	ft_strlen(char const *s)
 	return (i);
 }
 
+char	*ft_strdup(const char *src)
+{
+	char	*p;
+	int		compteur;
+
+	compteur = 0;
+	p = (char *) malloc(sizeof(char) * (ft_strlen(src) + 1));
+	if (!p)
+		return (NULL);
+	while (*src)
+		p[compteur++] = *src++;
+	p[compteur] = '\0';
+	return (p);
+}
+
 char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
 	size_t	i;
@@ -32,8 +47,6 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	len_s = ft_strlen(s);
-	if (start >= len_s)
-		return ('\0');
 	if (len > len_s - start)
 		len = len_s - start;
 	p = (char *)malloc(sizeof(char) * (len + 1));
