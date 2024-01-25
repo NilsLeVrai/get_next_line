@@ -91,7 +91,7 @@ char	*get_next_line(int fd)
 	return (ft_return_line(&line));
 }
 
-/* int main()
+int main()
 {
 	int fd = open("te.txt", O_RDONLY);
 	char *line = get_next_line(fd);
@@ -102,4 +102,4 @@ char	*get_next_line(int fd)
 		line = get_next_line(fd);
 	}
 	close(fd);
-} */
+}
