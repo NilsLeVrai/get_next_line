@@ -58,7 +58,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	return (p);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	i;
 	size_t	size_s1;
