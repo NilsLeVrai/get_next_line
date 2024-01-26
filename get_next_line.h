@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:18 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/23 14:27:48 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/26 17:29:02 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 
 char	*get_next_line(int fd);
 char	*ft_strchr(char *s, int c);
+char	*ft_strdup(const char *src);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(const char *s1, unsigned int start, size_t len);
 size_t	ft_strlen(char const *s);
