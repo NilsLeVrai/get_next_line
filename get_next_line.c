@@ -44,6 +44,12 @@ static char	*ft_read_line(int fd, char *line)
 		}
 		buffer[bytes_read] = '\0';
 		line = ft_strjoin(line, buffer);
+		if (!line)
+		{
+			free (line);
+			line = NULL;
+			return (NULL);
+		}
 	}
 	return (line);
 }
@@ -63,8 +69,15 @@ char	*ft_return_line(char **line)
 	}
 	current_line = ft_substr(*line, 0, len + 1);
 	next_line = ft_substr(*line, len + 1, ft_strlen(*line) - len - 1);
-	free(*line);
-	*line = next_line;
+	free(current_line);
+	current_line = next_line;
+/* 	if (!current_line || next_line || !ft_strlen(next_line))
+	{
+		free (next_line);
+		free (*line);
+		line = NULL;
+		return (NULL);
+	} */
 	return (current_line);
 }
 
@@ -77,17 +90,15 @@ char	*get_next_line(int fd)
 	if (!line)
 	{
 		line = (char *) malloc(sizeof(char) * 1);
+		if (!line)
+			return (free (line), line = NULL, NULL);
 		line[0] = '\0';
 	}
 	line = ft_read_line(fd, line);
 	if (!line)
 		return (NULL);
 	if (ft_strlen(line) == 0)
-	{
-		free(line);
-		line = NULL;
-		return (NULL);
-	}
+		return (free (line), line = NULL, NULL);
 	return (ft_return_line(&line));
 }
 
@@ -101,5 +112,6 @@ int main()
 		free(line);
 		line = get_next_line(fd);
 	}
+	//free (line);
 	close(fd);
 }
