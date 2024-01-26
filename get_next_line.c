@@ -98,9 +98,8 @@ char	*get_next_line(int fd)
 	line = ft_read_line(fd, line);
 	if (!line)
 		return (free (line), line = NULL, NULL);
-	if (ft_strlen(line) == 0)
+	if (ft_strlen(line) < 1)
 		return (free (line), line = NULL, NULL);
-	
 	return (ft_return_line(&line));
 }
 
