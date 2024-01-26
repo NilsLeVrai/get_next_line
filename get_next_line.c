@@ -114,7 +114,7 @@ int main()
 		line = get_next_line(fd);
 	} */
 	printf("%s", line);
-	printf("yo le sk8er boi%p\n", line);
+	//printf("yo le sk8er boi%p\n", line);
 	free (line);
 	close(fd);
 }
