@@ -69,15 +69,16 @@ char	*ft_return_line(char **line)
 	}
 	current_line = ft_substr(*line, 0, len + 1);
 	next_line = ft_substr(*line, len + 1, ft_strlen(*line) - len - 1);
-	free(current_line);
-	current_line = next_line;
-/* 	if (!current_line || next_line || !ft_strlen(next_line))
+	free(*line);
+	*line = next_line;
+	if (!current_line || !next_line || !ft_strlen(next_line))
 	{
 		free (next_line);
 		free (*line);
-		line = NULL;
+		*line = NULL;
 		return (NULL);
-	} */
+	}
+	printf("yo le rap%p\n", current_line);
 	return (current_line);
 }
 
@@ -89,16 +90,17 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (!line)
 	{
-		line = (char *) malloc(sizeof(char) * 1);
+		line = (char *) malloc(sizeof(char) * 1); // ???? buggy bugger
 		if (!line)
 			return (free (line), line = NULL, NULL);
 		line[0] = '\0';
 	}
 	line = ft_read_line(fd, line);
 	if (!line)
-		return (NULL);
+		return (free (line), line = NULL, NULL);
 	if (ft_strlen(line) == 0)
 		return (free (line), line = NULL, NULL);
+	
 	return (ft_return_line(&line));
 }
 
@@ -106,12 +108,14 @@ int main()
 {
 	int fd = open("te.txt", O_RDONLY);
 	char *line = get_next_line(fd);
-	while (line != NULL)
+/* 	while (line != NULL)
 	{
 		printf("%s", line);
 		free(line);
 		line = get_next_line(fd);
-	}
-	//free (line);
+	} */
+	printf("%s", line);
+	printf("yo le sk8er boi%p\n", line);
+	free (line);
 	close(fd);
 }
