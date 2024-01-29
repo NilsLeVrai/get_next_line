@@ -6,11 +6,17 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 21:28:19 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/29 15:33:39 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:18:24 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+static char	*ft_check(char *line)
+{
+	if (!line)
+		return (NULL);
+}
 
 static int	check_len_and_end(char *line)
 {
@@ -23,7 +29,7 @@ static int	check_len_and_end(char *line)
 	{
 		if (line[i] == '\n')
 			return (i + 1);
-		i++;
+		++i;
 	}
 	return (FALSE);
 }
@@ -42,18 +48,14 @@ static char	*ft_read_line(int fd, char *line)
 			return (free(line), line = NULL, NULL);
 		buffer[bytes_read] = '\0';
 		if (!line)
-		{
 			line = ft_strdup(buffer);
-			if (!line)
-				return (NULL);
-		}
+		ft_check(line);
 		else
-		{ 
+		{
 			tmp = ft_strjoin(line, buffer);
 			free(line);
 			line = tmp;
-			if (!line)
-				return (NULL);
+			ft_check(line);
 		}
 		if (!line)
 			return (free(line), line = NULL, NULL);
@@ -61,7 +63,7 @@ static char	*ft_read_line(int fd, char *line)
 	return (line);
 }
 
-char	*ft_return_line(char **line)
+static char	*ft_return_line(char **line)
 {
 	char	*current_line;
 	char	*next_line;
@@ -103,15 +105,13 @@ char	*get_next_line(int fd)
 
 /* 	int main()
 {
-	int fd = open("42_with_nl.txt", O_RDONLY);
+	int fd = open("42_with_nl", O_RDONLY);
 	char *line = get_next_line(fd);
  	while (line != NULL)
 	{
-		printf("%s\n", line);
+		printf("%s", line);
 		free(line);
 		line = get_next_line(fd);
 	}  
 	printf("%s", line);
-	free (line);
-	close(fd);
 } */
