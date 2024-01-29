@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 21:28:19 by niabraha          #+#    #+#             */
-/*   Updated: 2024/01/29 15:30:19 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/01/29 15:33:39 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	*get_next_line(int fd)
 
 /* 	int main()
 {
-	int fd = open("alexis.txt", O_RDONLY);
+	int fd = open("42_with_nl.txt", O_RDONLY);
 	char *line = get_next_line(fd);
  	while (line != NULL)
 	{
@@ -114,17 +114,4 @@ char	*get_next_line(int fd)
 	printf("%s", line);
 	free (line);
 	close(fd);
-} */
-/* 	line = get_next_line(1000);
-	printf("%s", line);
-	free (line);
-	fd = open("alexis.txt", O_RDONLY);
-	line = get_next_line(fd);
-	printf("%s", line);
-	free (line);
-	close(fd);
-	line = get_next_line(1000);
-	printf("%s", line);
-	free (line);
-	fd = open("alexis.txt", O_RDONLY); 
 } */
