@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:47:17 by niabraha          #+#    #+#             */
-/*   Updated: 2024/02/05 16:25:27 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:25:36 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static int	check_len_and_end(char *line)
 {
@@ -30,8 +30,8 @@ static int	check_len_and_end(char *line)
 
 static char	*ft_read_line(int fd, char *line)
 {
-	char		buffer[BUFFER_SIZE + 1];
-	char		*tmp;
+	char	buffer[BUFFER_SIZE + 1];
+	char	*tmp;
 	ssize_t		bytes_read;
 
 	bytes_read = 1;
@@ -83,14 +83,14 @@ char	*ft_return_line(char **line)
 
 char	*get_next_line(int fd)
 {
-	static char	*line;
+	static char	*line[1048576];
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= 1048576)
 		return (NULL);
-	line = ft_read_line(fd, line);
-	if (!line)
-		return (free (line), line = NULL, NULL);
-	if (ft_strlen(line) < 1)
-		return (free (line), line = NULL, NULL);
-	return (ft_return_line(&line));
+	line[fd] = ft_read_line(fd, line[fd]);
+	if (!line[fd])
+		return (free (line[fd]), line[fd] = NULL, NULL);
+	if (ft_strlen(line[fd]) < 1)
+		return (free (line[fd]), line[fd] = NULL, NULL);
+	return (ft_return_line(&line[fd]));
 }
