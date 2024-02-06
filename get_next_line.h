@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:54:18 by niabraha          #+#    #+#             */
-/*   Updated: 2024/02/05 16:27:52 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:31:41 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # if (BUFFER_SIZE < 1 || BUFFER_SIZE > INT_MAX)
 #  undef BUFFER_SIZE
-#  define BUFFER_SIZE 8192
+#  define BUFFER_SIZE 42
 # endif
 
 # include <stdlib.h>

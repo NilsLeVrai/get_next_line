@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:47:17 by niabraha          #+#    #+#             */
-/*   Updated: 2024/02/05 16:25:36 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/02/06 12:28:28 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static int	check_len_and_end(char *line)
 
 static char	*ft_read_line(int fd, char *line)
 {
-	char	buffer[BUFFER_SIZE + 1];
-	char	*tmp;
+	char		buffer[BUFFER_SIZE + 1];
+	char		*tmp;
 	ssize_t		bytes_read;
 
 	bytes_read = 1;
