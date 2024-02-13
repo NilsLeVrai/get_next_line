@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:34:59 by niabraha          #+#    #+#             */
-/*   Updated: 2024/02/01 14:41:42 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:59:38 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,4 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		p[i++] = *s2++;
 	p[i] = '\0';
 	return (p);
-}
-
-char	*ft_strchr(char *s, int c)
-{
-	int	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	if (c == '\0')
-		return ((char *)&s[ft_strlen(s)]);
-	while (s[i] != '\0')
-	{
-		if (s[i] == (char)c)
-			return ((char *)&s[i]);
-		i++;
-	}
-	return (0);
 }
