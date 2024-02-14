@@ -6,7 +6,7 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:47:17 by niabraha          #+#    #+#             */
-/*   Updated: 2024/02/05 16:25:27 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/02/14 12:45:22 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	*ft_return_line(char **line)
 	{
 		free (current_line);
 		return (free (*line), *line = NULL, NULL);
-	}	
+	}
 	return (current_line);
 }
 

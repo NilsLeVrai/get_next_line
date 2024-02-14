@@ -6,11 +6,11 @@
 /*   By: niabraha <niabraha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:34:59 by niabraha          #+#    #+#             */
-/*   Updated: 2024/02/13 13:59:53 by niabraha         ###   ########.fr       */
+/*   Updated: 2024/02/14 12:48:01 by niabraha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 size_t	ft_strlen(char const *s)
 {
