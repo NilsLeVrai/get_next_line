@@ -1,0 +1,10 @@
+
+
+gcc -Wall -Werror -Wextra -D BUFFER_SIZE=1 maingnl.c get_next_line.c get_next_line_utils.c && ./a.out | cat -e
+gcc -Wall -Werror -Wextra -D BUFFER_SIZE=10 maingnl.c get_next_line.c get_next_line_utils.c && ./a.out | cat -e
+gcc -Wall -Werror -Wextra -D BUFFER_SIZE=42 maingnl.c get_next_line.c get_next_line_utils.c && ./a.out | cat -e
+gcc -Wall -Werror -Wextra -D BUFFER_SIZE=100000000 maingnl.c get_next_line.c get_next_line_utils.c && ./a.out | cat -e
+
+norminette
+valgrind ./a.out
+funcheck ./a.out
